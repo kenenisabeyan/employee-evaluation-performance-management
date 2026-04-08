@@ -22,6 +22,53 @@ export const authOptions = {
           return null;
         }
 
+        // --- DEV BYPASS DUE TO MONGODB RESTRICTIONS ---
+        const bypassUsers = [
+          {
+            email: 'admin@astu.edu.et',
+            password: 'Admin123!',
+            id: 'mock-admin-id',
+            firstName: 'System',
+            lastName: 'Administrator',
+            fullName: 'System Administrator',
+            role: 'admin',
+            employeeId: 'ADM001',
+            position: 'System Administrator',
+            permissions: ['manage_users', 'manage_departments', 'approve_results', 'view_reports']
+          },
+          {
+            email: 'leader@company.com',
+            password: 'Leader123!',
+            id: 'mock-leader-id',
+            firstName: 'John',
+            lastName: 'Leader',
+            fullName: 'John Leader',
+            role: 'team-leader',
+            employeeId: 'TL001',
+            position: 'Development Team Lead',
+            permissions: ['create_task', 'edit_task', 'delete_task', 'evaluate_peer', 'view_reports']
+          },
+          {
+            email: 'alice@company.com',
+            password: 'Employee123!',
+            id: 'mock-employee-id',
+            firstName: 'Alice',
+            lastName: 'Developer',
+            fullName: 'Alice Developer',
+            role: 'employee',
+            employeeId: 'EMP001',
+            position: 'Software Developer',
+            permissions: ['evaluate_self', 'evaluate_peer']
+          }
+        ];
+
+        const mockUser = bypassUsers.find(u => u.email === credentials.email && u.password === credentials.password);
+        if (mockUser) {
+          console.log('✅ Bypassed MongoDB DB Connection via hardcoded user:', mockUser.email);
+          return mockUser;
+        }
+        // --- END DEV BYPASS ---
+
         try {
           console.log('🔌 Connecting to MongoDB...');
           await connectDB();
