@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BarChart2, Users, Target, ShieldCheck, Activity } from 'lucide-react';
+import { ArrowRight, BarChart2, Users, Target, ShieldCheck } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -15,8 +16,13 @@ export default function Home() {
       <nav className="border-b border-white/5 backdrop-blur-xl bg-black/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500 via-indigo-500 to-violet-600 flex items-center justify-center shadow-[0_20px_80px_rgba(56,189,248,0.18)]">
-              <Activity className="w-5 h-5 text-white" />
+            <div className="relative h-11 w-11 overflow-hidden rounded-2xl shadow-[0_20px_80px_rgba(56,189,248,0.18)] bg-slate-950/90 border border-white/10">
+              <Image
+                src="/image/astuLogo.png"
+                alt="PerformCore logo"
+                fill
+                className="object-cover"
+              />
             </div>
             <div>
               <p className="font-semibold text-white text-lg">PerformCore</p>

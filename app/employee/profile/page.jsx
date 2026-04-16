@@ -61,7 +61,7 @@ export default function EmployeeProfilePage() {
             <div className="flex items-center gap-6">
               <div className="relative h-28 w-28 rounded-[2rem] overflow-hidden border-2 border-sky-400 shadow-xl">
                 <Image
-                  src={user.profileImage || '/image/profile.png'}
+                  src={user.profileImage || '/image/astuLogo.png'}
                   alt={user.fullName || 'Employee profile'}
                   fill
                   className="object-cover"
