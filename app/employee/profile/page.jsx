@@ -59,7 +59,7 @@ export default function EmployeeProfilePage() {
         <div className="rounded-[2rem] border border-white/10 bg-slate-900/90 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.45)] backdrop-blur-xl">
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-6">
-              <div className="relative h-28 w-28 rounded-[2rem] overflow-hidden border-2 border-sky-400 shadow-xl">
+              <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-sky-400 shadow-xl">
                 <Image
                   src={user.profileImage || '/image/astuLogo.png'}
                   alt={user.fullName || 'Employee profile'}
@@ -68,7 +68,6 @@ export default function EmployeeProfilePage() {
                 />
               </div>
               <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-sky-300 mb-2">Employee Profile</p>
                 <h1 className="text-4xl font-extrabold tracking-tight text-white">{user.fullName || 'No Name'}</h1>
                 <p className="mt-2 text-slate-400">{user.position || 'Employee'} • {user.department || 'No department assigned'}</p>
               </div>

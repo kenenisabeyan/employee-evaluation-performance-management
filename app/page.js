@@ -13,20 +13,16 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="border-b border-white/5 backdrop-blur-xl bg-black/20 sticky top-0 z-50">
+      <nav className="border-b border-slate-800 bg-[#0f172a] fixed top-0 left-0 w-full z-50 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="relative h-11 w-11 overflow-hidden rounded-2xl shadow-[0_20px_80px_rgba(56,189,248,0.18)] bg-slate-950/90 border border-white/10">
+            <div className="relative h-11 w-11 overflow-hidden rounded-full shadow-[0_20px_80px_rgba(56,189,248,0.18)] bg-slate-950/90 border border-white/10">
               <Image
                 src="/image/astuLogo.png"
                 alt="PerformCore logo"
                 fill
                 className="object-cover"
               />
-            </div>
-            <div>
-              <p className="font-semibold text-white text-lg">PerformCore</p>
-              <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Performance made simple</p>
             </div>
           </div>
 
