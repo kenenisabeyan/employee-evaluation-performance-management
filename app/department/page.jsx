@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
-import AdminstractureNavBar from '../employee/shared/admisteratur-navbar/NavbarAdmin'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function DepartmentList() {
   const [departments, setDepartments] = useState([])
@@ -24,59 +25,61 @@ export default function DepartmentList() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-indigo-100">
-     
-      <div className="w-full relative shadow-md">
-        <AdminstractureNavBar />
-      </div>
-
-     
-      <div className="text-center mt-24 mb-8">
-        <h1 className="text-4xl font-extrabold text-indigo-800 drop-shadow-md">
-          📑 Department List
+    <div className="min-h-screen bg-[#f4f7fc] font-sans pb-24">
+      {/* Generic Top Nav for Standalone Pages */}
+      <nav className="bg-[#3b41c5] text-white h-16 flex items-center px-6 shadow-md fixed top-0 w-full z-50">
+        <Link href="/" className="flex items-center gap-2 hover:text-indigo-200 transition">
+          <ArrowLeft className="w-5 h-5" />
+          <span className="font-semibold tracking-wide">Back to Home</span>
+        </Link>
+        <div className="ml-auto font-bold tracking-wide">Global Departments</div>
+      </nav>
+      
+      <div className="text-center mt-32 mb-10">
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Department Directory
         </h1>
-        <p className="text-indigo-400 mt-2 text-lg">
-          Manage and monitor all departments
+        <p className="text-gray-500 mt-2 text-lg font-medium">
+          Monitor all active departments across the university.
         </p>
       </div>
 
-     
-      <div className="px-6 pb-12">
-        <Card className="p-6 shadow-2xl rounded-3xl bg-white border border-gray-200">
+      <div className="max-w-7xl mx-auto px-6">
+        <Card className="p-0 shadow-xl rounded-3xl bg-white border border-gray-200 overflow-hidden">
           {loading ? (
-            <p className="text-center text-gray-500 animate-pulse text-lg">
-              Loading departments...
-            </p>
+            <div className="p-12 flex justify-center">
+               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden text-sm md:text-base">
-                <thead className="bg-indigo-100 text-indigo-800 uppercase text-xs md:text-sm">
+              <table className="min-w-full text-sm md:text-base">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs tracking-wider">
                   <tr>
-                    <th className="px-4 py-3 font-semibold">Department Name</th>
-                    <th className="px-4 py-3 font-semibold">Head of Department</th>
-                    <th className="px-4 py-3 font-semibold">Employees</th>
-                    <th className="px-4 py-3 font-semibold">Location</th>
-                    <th className="px-4 py-3 font-semibold">Email</th>
-                    <th className="px-4 py-3 font-semibold">Status</th>
-                    <th className="px-4 py-3 font-semibold">Action</th>
+                    <th className="px-6 py-4 font-bold text-left">Department Name</th>
+                    <th className="px-6 py-4 font-bold text-left">Head of Department</th>
+                    <th className="px-6 py-4 font-bold text-center">Employees</th>
+                    <th className="px-6 py-4 font-bold text-left">Location</th>
+                    <th className="px-6 py-4 font-bold text-left">Email</th>
+                    <th className="px-6 py-4 font-bold text-center">Status</th>
+                    <th className="px-6 py-4 font-bold text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-100">
                   {departments.map((dept) => (
                     <tr
                       key={dept.id}
-                      className="hover:bg-indigo-50 transition duration-300"
+                      className="hover:bg-gray-50 transition-colors"
                     >
-                      <td className="px-4 py-3 font-medium text-gray-700">{dept.name}</td>
-                      <td className="px-4 py-3 text-gray-600">{dept.head}</td>
-                      <td className="px-4 py-3 text-center">{dept.employees}</td>
-                      <td className="px-4 py-3 text-gray-600">{dept.location}</td>
-                      <td className="px-4 py-3 text-blue-600 hover:underline cursor-pointer">
+                      <td className="px-6 py-4 font-bold text-gray-900">{dept.name}</td>
+                      <td className="px-6 py-4 text-gray-600">{dept.head}</td>
+                      <td className="px-6 py-4 text-center font-bold text-gray-900">{dept.employees}</td>
+                      <td className="px-6 py-4 text-gray-600">{dept.location}</td>
+                      <td className="px-6 py-4 text-[#3b41c5] font-medium hover:underline cursor-pointer">
                         {dept.email}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4 text-center">
                         <span
-                          className={`px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
+                          className={`px-3 py-1 text-xs font-bold rounded-full ${
                             dept.status === 'Active'
                               ? 'text-green-700 bg-green-100'
                               : 'text-red-700 bg-red-100'
@@ -85,8 +88,8 @@ export default function DepartmentList() {
                           {dept.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3">
-                        <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm shadow hover:bg-indigo-700 hover:scale-105 transition transform">
+                      <td className="px-6 py-4 text-center">
+                        <button className="px-4 py-1.5 bg-[#3b41c5]/10 text-[#3b41c5] font-bold rounded-lg text-sm hover:bg-[#3b41c5]/20 transition-colors">
                           View
                         </button>
                       </td>
