@@ -1,126 +1,146 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { Calendar } from "lucide-react";
 
 export default function EmployeeProfilePage() {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Mock data to match the screenshot layout until real data is hooked up
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch('/api/employee/profile')
-        if (!res.ok) {
-          throw new Error('Failed to load profile')
-        }
-        const data = await res.json()
-        setUser(data.user)
-      } catch (err) {
-        setError(err.message || 'Unable to load profile')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchProfile()
-  }, [])
+    // Simulate fetching user
+    setTimeout(() => {
+      setUser({
+        fullName: "Kenenisa Beyan Habesha",
+        idNumber: "UGR/30772/15",
+        admissionYear: "2022/2023",
+        dormitory: "B359, R-44",
+        program: "Computer Science and Engineering",
+        admission: "Undergraduate Regular",
+        classYear: "Fourth Year",
+        section: "Section 2",
+        profileImage: "/image/astuLogo.png", // fallback image
+      });
+      setLoading(false);
+    }, 500);
+  }, []);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
-        <div className="text-center">
-          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-slate-700 border-t-sky-400"></div>
-          <p className="mt-4 text-slate-300">Loading profile...</p>
-        </div>
+      <div className="flex items-center justify-center h-64">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#0ea5e9]"></div>
       </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white px-4">
-        <div className="max-w-xl rounded-3xl bg-slate-900/90 border border-white/10 p-10 text-center shadow-2xl">
-          <h1 className="text-2xl font-semibold mb-4">Profile unavailable</h1>
-          <p className="text-slate-400 mb-6">{error}</p>
-          <Link href="/" className="inline-flex rounded-full bg-sky-500 px-6 py-3 text-white font-semibold hover:bg-sky-400 transition">
-            Return home
-          </Link>
-        </div>
-      </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-5xl px-6 py-16">
-        <div className="rounded-[2rem] border border-white/10 bg-slate-900/90 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.45)] backdrop-blur-xl">
-          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-center gap-6">
-              <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-sky-400 shadow-xl">
+    <div className="max-w-6xl mx-auto space-y-6">
+      {/* Profile Card */}
+      <div className="bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
+        {/* Teal Header */}
+        <div className="bg-[#17a2b8] px-4 py-2 flex items-center text-white">
+          <Calendar className="w-5 h-5 mr-2" />
+          <h2 className="text-sm font-medium">Upcoming Events</h2>
+        </div>
+
+        {/* Profile Details Content */}
+        <div className="p-6 flex flex-col md:flex-row gap-8">
+          {/* Profile Picture */}
+          <div className="flex-shrink-0">
+            <div className="w-48 h-56 relative overflow-hidden rounded-md border border-gray-300 shadow-sm bg-gradient-to-b from-gray-800 to-gray-600">
+              {/* If you have a real image, it goes here */}
+              {user?.profileImage && (
                 <Image
-                  src={user.profileImage || '/image/astuLogo.png'}
-                  alt={user.fullName || 'Employee profile'}
+                  src={user.profileImage}
+                  alt={user.fullName || "Profile"}
                   fill
-                  className="object-cover"
+                  className="object-cover opacity-90"
                 />
+              )}
+            </div>
+          </div>
+
+          {/* Details Grid */}
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm mt-2">
+            <div className="space-y-4">
+              <div>
+                <span className="font-bold text-gray-800">Full Name:</span>{" "}
+                <span className="text-gray-600">{user?.fullName}</span>
               </div>
               <div>
-                <h1 className="text-4xl font-extrabold tracking-tight text-white">{user.fullName || 'No Name'}</h1>
-                <p className="mt-2 text-slate-400">{user.position || 'Employee'} • {user.department || 'No department assigned'}</p>
+                <span className="font-bold text-gray-800">ID Number:</span>{" "}
+                <span className="text-gray-600">{user?.idNumber}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-800">Admission Year:</span>{" "}
+                <span className="text-gray-600">{user?.admissionYear}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-800">Dormitory:</span>{" "}
+                <span className="text-gray-600">{user?.dormitory}</span>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/employee/employee_profile_edit"
-                className="rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400"
-              >
-                Edit profile
-              </Link>
-              <Link
-                href="/employee/employee-dashboard"
-                className="rounded-full border border-slate-700 bg-transparent px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white"
-              >
-                Dashboard
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-4">Contact</p>
-              <div className="space-y-3 text-slate-100">
-                <p><span className="font-semibold text-white">Email:</span> {user.email || 'N/A'}</p>
-                <p><span className="font-semibold text-white">Phone:</span> {user.phone || 'N/A'}</p>
+            <div className="space-y-4">
+              <div>
+                <span className="font-bold text-gray-800">Program:</span>{" "}
+                <span className="text-gray-600">{user?.program}</span>
               </div>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-4">Work</p>
-              <div className="space-y-3 text-slate-100">
-                <p><span className="font-semibold text-white">Role:</span> {user.position || 'N/A'}</p>
-                <p><span className="font-semibold text-white">Status:</span> {user.isActive ? 'Active' : 'Inactive'}</p>
-                <p><span className="font-semibold text-white">Department:</span> {user.department || 'N/A'}</p>
+              <div>
+                <span className="font-bold text-gray-800">Admission:</span>{" "}
+                <span className="text-gray-600">{user?.admission}</span>
               </div>
-            </div>
-          </div>
-
-          <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-4">Location</p>
-              <p className="text-slate-100">{user.country || 'Not specified'}, {user.region || 'Not specified'}</p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-950/80 p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-4">Emergency Contact</p>
-              <p className="text-slate-100">{user.emgName || 'N/A'}</p>
-              <p className="text-slate-100">{user.emgRelation || 'N/A'}</p>
-              <p className="text-slate-100">{user.emgContact || 'N/A'}</p>
+              <div>
+                <span className="font-bold text-gray-800">Class Year:</span>{" "}
+                <span className="text-gray-600">{user?.classYear}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-800">Section:</span>{" "}
+                <span className="text-gray-600">{user?.section}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Events Table Section */}
+      <div className="bg-white rounded-sm border border-gray-200 shadow-sm p-4">
+        <div className="flex items-center mb-4 text-gray-800 font-bold">
+          <Calendar className="w-4 h-4 mr-2" />
+          <h3 className="text-sm">Upcoming Events</h3>
+        </div>
+
+        <div className="overflow-x-auto border border-gray-200 rounded-sm">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-white text-gray-800 font-bold border-b border-gray-200">
+              <tr>
+                <th className="px-4 py-3">Date</th>
+                <th className="px-4 py-3">Activity</th>
+                <th className="px-4 py-3">Admission For</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 text-gray-600">
+              <tr className="hover:bg-gray-50 transition-colors">
+                <td className="px-4 py-3 font-medium text-gray-800">February 16, 2026 - April 23, 2026</td>
+                <td className="px-4 py-3">Add and drop Approval 2025/2026 Second Semester</td>
+                <td className="px-4 py-3">Undergraduate Regular</td>
+              </tr>
+              <tr className="hover:bg-gray-50 transition-colors">
+                <td className="px-4 py-3 font-medium text-gray-800">February 9, 2026 - May 29, 2026</td>
+                <td className="px-4 py-3">Continuous Assessment 2025/2026 Second Semester</td>
+                <td className="px-4 py-3">Undergraduate Regular</td>
+              </tr>
+              <tr className="hover:bg-gray-50 transition-colors">
+                <td className="px-4 py-3 font-medium text-gray-800">February 9, 2026 - June 7, 2026</td>
+                <td className="px-4 py-3">Grade submission 2025/2026 Second Semester</td>
+                <td className="px-4 py-3">Undergraduate Regular</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
