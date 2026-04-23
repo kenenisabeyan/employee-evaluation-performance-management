@@ -4,7 +4,8 @@ const taskSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    index: true
   },
   description: {
     type: String,
@@ -14,7 +15,8 @@ const taskSchema = new mongoose.Schema({
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
   assignedBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -117,7 +119,7 @@ const taskSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Calculate total score based on evaluation criteria
+// Dynamic total score calculation virtual field based on weights
 taskSchema.virtual('totalScore').get(function() {
   if (!this.evaluationCriteria || this.evaluationCriteria.length === 0) {
     return this.score || 0;
@@ -136,7 +138,7 @@ taskSchema.virtual('totalScore').get(function() {
   return totalWeight > 0 ? Math.round((totalScore / totalWeight) * 100) : 0;
 });
 
-// Ensure virtual fields are serialized
+// Ensure virtual fields are serialized correctly in API responses
 taskSchema.set('toJSON', {
   virtuals: true
 });

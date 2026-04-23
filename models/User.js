@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    lowercase: true
+    lowercase: true,
+    index: true // Added index for faster queries
   },
   password: {
     type: String,
@@ -40,7 +41,8 @@ const userSchema = new mongoose.Schema({
   employeeId: {
     type: String,
     unique: true,
-    sparse: true
+    sparse: true,
+    index: true // Added index for faster queries
   },
   position: {
     type: String,
@@ -55,7 +57,8 @@ const userSchema = new mongoose.Schema({
     trim: true
   },
   profileImage: {
-    type: String
+    type: String,
+    default: '/image/astuLogo.png' // Modernized default
   },
   isActive: {
     type: Boolean,
@@ -66,7 +69,12 @@ const userSchema = new mongoose.Schema({
   },
   permissions: [{
     type: String,
-    enum: ['create_task', 'edit_task', 'delete_task', 'evaluate_peer', 'evaluate_self', 'manage_users', 'manage_departments', 'approve_results', 'view_reports']
+    enum: [
+      'create_task', 'edit_task', 'delete_task', 
+      'evaluate_peer', 'evaluate_self', 
+      'manage_users', 'manage_departments', 
+      'approve_results', 'view_reports'
+    ]
   }],
   createdAt: {
     type: Date,
@@ -82,12 +90,12 @@ const userSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Virtual for fullName
+// Virtual for full name construction
 userSchema.virtual('fullName').get(function() {
   return `${this.firstName} ${this.lastName}`.trim();
 });
 
-// Hash password before saving
+// Automatically hash password before saving to DB
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
@@ -100,7 +108,7 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Compare password method
+// Compare hashed password method for authentication
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

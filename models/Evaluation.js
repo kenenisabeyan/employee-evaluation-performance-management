@@ -4,17 +4,19 @@ const evaluationSchema = new mongoose.Schema({
   task: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Task',
-    required: false // Changed from true to false to make it optional
+    required: false // Optional task linkage
   },
   evaluator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
   evaluatee: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
   evaluationType: {
     type: String,
@@ -86,7 +88,7 @@ const evaluationSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Calculate overall score based on criteria
+// Calculate overall score dynamically before saving based on criteria weightings
 evaluationSchema.pre('save', function(next) {
   if (this.criteria && this.criteria.length > 0) {
     let totalScore = 0;
