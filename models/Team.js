@@ -4,13 +4,15 @@ const teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    index: true
   },
   code: {
     type: String,
     required: true,
     unique: true,
-    uppercase: true
+    uppercase: true,
+    index: true
   },
   description: {
     type: String,

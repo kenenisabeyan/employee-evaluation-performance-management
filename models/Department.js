@@ -11,7 +11,8 @@ const departmentSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    uppercase: true
+    uppercase: true,
+    index: true
   },
   description: {
     type: String,
