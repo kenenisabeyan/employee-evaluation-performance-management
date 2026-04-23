@@ -55,11 +55,10 @@ export default function TeamLeaderLayout({ children }) {
         </div>
       </header>
 
-      {/* Sidebar & Main Content Wrapper */}
       <div className="flex flex-1 pt-16">
-        {/* Sidebar */}
+        {/* Fixed Left Sidebar */}
         <aside 
-          className={`fixed md:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white shadow-[2px_0_8px_rgba(0,0,0,0.05)] z-40 transition-transform duration-300 ${
+          className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white shadow-[2px_0_8px_rgba(0,0,0,0.05)] z-40 transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
           } flex flex-col`}
         >
@@ -108,8 +107,8 @@ export default function TeamLeaderLayout({ children }) {
           />
         )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 md:p-10 w-full overflow-x-hidden">
+        {/* Main Content Area - Pushed right on desktop to account for fixed sidebar */}
+        <main className="flex-1 p-6 md:p-10 w-full overflow-x-hidden md:ml-64">
           {children}
         </main>
       </div>

@@ -11,7 +11,6 @@ export default function AdminEvaluationBehavioral() {
   const [loading, setLoading] = useState(false); 
   const [message, setMessage] = useState('');
 
-
   useEffect(() => {
     async function fetchUsers() {
       try {
@@ -96,152 +95,165 @@ export default function AdminEvaluationBehavioral() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 px-4 py-8 flex justify-center">
-      <div className="w-full max-w-7xl">
-        <div className="flex flex-col items-center text-center space-y-4 mb-10">
-          <Image
-            src="/image/astuLogo.png"
-            alt="ASTU Logo"
-            width={100}
-            height={100}
-            className="rounded-full shadow-lg border border-gray-200"
-          />
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Adama Science and Technology University (ASTU)
+    <div className="w-full space-y-8">
+      {/* Header Section */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center space-y-4">
+        <Image
+          src="/image/astuLogo.png"
+          alt="ASTU Logo"
+          width={80}
+          height={80}
+          className="rounded-full shadow-sm border border-gray-100"
+        />
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Adama Science and Technology University
           </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Admin/Leader Behavioral Evaluation Form (10%)
+          </p>
+        </div>
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-8"
+      >
+        <div className="grid grid-cols-1 gap-6">
+          <label className="flex flex-col text-sm font-semibold text-gray-700 w-full">
+            Select Employee:
+            <select
+              className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none transition-all"
+              onChange={handleEmployeeChange}
+              value={(selectedEmployee?._id || selectedEmployee?.id) || ''}
+            >
+              <option value="">Choose an employee</option>
+              {users.map((emp) => (
+                <option key={emp._id || emp.id} value={emp._id || emp.id}>
+                  {emp.fullName || emp.name}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white/70 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200 space-y-6"
-        >
-          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 items-start w-full max-w-2xl mx-auto">
-            <div className="flex-1">
-              <label className="block text-gray-700 font-medium mb-2">Select Employee:</label>
-              <select
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 outline-none"
-                onChange={handleEmployeeChange}
-                value={(selectedEmployee?._id || selectedEmployee?.id) || ''}
-              >
-                <option value="">Choose an employee</option>
-                {users.map((emp) => (
-                  <option key={emp._id || emp.id} value={emp._id || emp.id}>
-                    {emp.fullName || emp.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+        {selectedEmployee && (
+          <div className="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 flex flex-wrap gap-4 text-sm font-medium text-gray-800">
+            <span className="bg-white px-3 py-1.5 rounded-lg border border-indigo-100"><strong>Employee Name:</strong> {selectedEmployee.name || selectedEmployee.fullName}</span>
+            <span className="bg-white px-3 py-1.5 rounded-lg border border-indigo-100"><strong>Year:</strong> {selectedEmployee.year || new Date().getFullYear()}</span>
           </div>
+        )}
 
-          {selectedEmployee && (
-            <div className="bg-gray-50 rounded-lg px-4 py-3 flex flex-col sm:flex-row flex-wrap gap-3 text-sm font-medium text-gray-800 border border-gray-200">
-              <span><strong>Employer Name:</strong> {selectedEmployee.name}</span>
-              <span><strong>Evaluation:</strong> {selectedEmployee.performance}</span>
-              <span><strong>Rank:</strong> {selectedEmployee.rank}</span>
-              <span><strong>Year:</strong> {selectedEmployee.year || new Date().getFullYear()}</span>
-            </div>
-          )}
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold border-b border-gray-100 pb-2">
+            Behavioral Evaluation <span className="text-[#8D92EB]">(10%)</span>
+          </h2>
 
-          <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-md">
-            <table className="min-w-full text-sm sm:text-base text-center">
-              <thead className="bg-indigo-100">
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="min-w-full text-sm text-center bg-white">
+              <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-3 py-2">No.</th>
-                  <th className="px-3 py-2">Task Listed</th>
-                  <th className="px-3 py-2">Task Division (100%)</th>
-                  <th colSpan={4} className="px-3 py-2">Task Division </th>
-                  <th className="px-3 py-2">Result Out of 10%</th>
+                  <th className="px-3 py-3 font-semibold text-gray-600">No.</th>
+                  <th className="px-3 py-3 font-semibold text-gray-600 text-left">Task Listed</th>
+                  <th className="px-3 py-3 font-semibold text-gray-600">Task Division (100%)</th>
+                  <th colSpan={4} className="px-3 py-3 font-semibold text-gray-600">Task Division</th>
+                  <th className="px-3 py-3 font-semibold text-gray-600">Result Out of 10%</th>
                 </tr>
-                <tr className="bg-indigo-50">
+                <tr className="bg-gray-100 text-xs border-b border-gray-200">
                   <th colSpan={3}></th>
                   {[1, 2, 3, 4].map((n) => (
-                    <th key={`rank-header-${n}`} className="px-2 py-1">{n}</th>
+                    <th key={`rank-header-${n}`} className="px-2 py-2 font-medium">{n}</th>
                   ))}
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-100">
                 {taskData.map((item, i) => (
-                  <tr key={item.id} className="hover:bg-indigo-50 transition-colors">
-                    <td className="border-t px-2 py-2">{i + 1}</td>
-                    <td className="border-t px-2 py-2 text-left">{item.name}</td>
-                    <td className="border-t px-2 py-2">{item.weight}</td>
+                  <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-2 py-3">{i + 1}</td>
+                    <td className="px-2 py-3 text-left font-medium">{item.name}</td>
+                    <td className="px-2 py-3">{item.weight}</td>
                     {[1, 2, 3, 4].map((num) => (
-                      <td key={`rank-${item.id}-${num}`} className="border-t px-2 py-2">
+                      <td key={`rank-${item.id}-${num}`} className="px-2 py-3">
                         <input
                           type="radio"
                           name={`rank-${i}`}
                           value={num}
                           checked={item.rank === num}
                           onChange={() => handleRankChange(i, num)}
-                          className="cursor-pointer accent-indigo-500"
+                          className="cursor-pointer accent-[#8D92EB] w-4 h-4"
                         />
                       </td>
                     ))}
-                    <td className="border-t px-2 py-2 font-semibold text-indigo-600">
+                    <td className="px-2 py-3 font-bold text-[#8D92EB]">
                       {getScore(item.rank, item.weight).toFixed(2)}
                     </td>
                   </tr>
                 ))}
 
-                <tr>
-                  <td className="border-t px-2 py-2">+</td>
-                  <td className="border-t px-2 py-2">
+                <tr className="bg-gray-50">
+                  <td className="px-2 py-3 text-gray-500 font-bold">+</td>
+                  <td className="px-2 py-3">
                     <input
                       type="text"
                       value={newTask.name}
                       onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
-                      className="w-full border border-gray-300 rounded px-2 py-1"
+                      className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none text-sm"
                       placeholder="New task name"
                     />
                   </td>
-                  <td className="border-t px-2 py-2">
+                  <td className="px-2 py-3">
                     <input
                       type="number"
                       value={newTask.weight}
                       onChange={(e) => setNewTask({ ...newTask, weight: e.target.value })}
-                      className="w-full border border-gray-300 rounded px-2 py-1"
+                      className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none text-sm"
                       placeholder="%"
                     />
                   </td>
-                  <td colSpan={4} className="border-t px-2 py-2">
+                  <td colSpan={4} className="px-2 py-3">
                     <button
                       type="button"
                       onClick={handleAddTask}
-                      className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600"
+                      className="text-xs bg-gray-200 text-gray-700 font-bold px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors w-full"
                     >
                       Add Task
                     </button>
                   </td>
-                  <td className="border-t px-2 py-2"></td>
+                  <td className="px-2 py-3"></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-3 font-medium text-gray-700">
-              Total Rank: <span className="font-bold">{totalRank.toFixed(2)}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <div className="bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 flex justify-between items-center text-gray-700">
+              <span className="font-semibold text-sm">Total Rank</span>
+              <span className="font-bold text-lg">{totalRank.toFixed(2)}</span>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 font-medium text-gray-700">
-              Total Score: <span className="font-bold text-green-700">{total.toFixed(2)}</span>
+            <div className="bg-indigo-50 border border-indigo-100 rounded-xl px-5 py-4 flex justify-between items-center text-gray-700">
+              <span className="font-semibold text-sm text-[#8D92EB]">Total Score (10%)</span>
+              <span className="font-bold text-lg text-[#8D92EB]">{total.toFixed(2)}</span>
             </div>
           </div>
+        </div>
 
-          {message && <p className="text-center text-red-600 font-medium">{message}</p>}
-          <div className="text-center">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-8 py-3 rounded-lg shadow-lg hover:from-indigo-600 hover:to-indigo-700 transition-transform transform hover:scale-105 ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              {loading ? 'Submitting...' : 'Submit Evaluation'}
-            </button>
+        {message && (
+          <div className={`p-4 rounded-xl text-center font-medium text-sm ${message.includes('Error') || message.includes('Failed') || message.includes('Please') ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+            {message}
           </div>
-        </form>
-      </div>
+        )}
+
+        <div className="pt-4 border-t border-gray-100 text-right">
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-[#8D92EB] text-white font-semibold px-10 py-3 rounded-xl shadow-sm hover:bg-[#7a7fd8] transition-colors disabled:opacity-50"
+          >
+            {loading ? 'Submitting...' : 'Submit Evaluation'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

@@ -69,34 +69,37 @@ export default function PeerEvaluationForm() {
   };
 
   return (
-    <div className="px-4 py-8  bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen">
-      <div className="flex flex-col items-center text-center space-y-4">
+    <div className="w-full space-y-8">
+      {/* Header Section */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center space-y-4">
         <Image
           src="/image/astuLogo.png"
           alt="ASTU Logo"
-          width={100}
-          height={100}
-          className="rounded-full shadow-xl border border-gray-300"
+          width={80}
+          height={80}
+          className="rounded-full shadow-sm border border-gray-100"
         />
-        <h1 className="text-3xl font-bold text-gray-800">
-          Adama Science And Technology University
-        </h1>
-        <p className="text-sm text-gray-600 max-w-lg">
-          Peer Evaluation Form for Behavioral and Task (10%)
-        </p>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Adama Science And Technology University
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Peer Evaluation Form for Behavioral and Task (10%)
+          </p>
+        </div>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className=" mb-48 max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg space-y-6"
+        className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-8"
       >
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <label className="flex flex-col text-sm font-semibold w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <label className="flex flex-col text-sm font-semibold text-gray-700 w-full col-span-1 sm:col-span-2">
             Select Peer (same team)
             <select
               value={evaluateeId}
               onChange={(e) => setEvaluateeId(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none transition-all"
               required
             >
               <option value="">Choose team member</option>
@@ -107,91 +110,91 @@ export default function PeerEvaluationForm() {
               ))}
             </select>
           </label>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <label className="flex flex-col text-sm font-semibold w-full">
+          <label className="flex flex-col text-sm font-semibold text-gray-700 w-full">
             Type of Work Evaluation
             <input
               type="text"
               value={typeOfWork}
               onChange={(e) => setTypeOfWork(e.target.value)}
               placeholder="Enter type"
-              className="mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none transition-all"
               required
             />
           </label>
-          <label className="flex flex-col text-sm font-semibold w-full">
+          <label className="flex flex-col text-sm font-semibold text-gray-700 w-full">
             Rank
             <input
               type="text"
               value={rank}
               onChange={(e) => setRank(e.target.value)}
               placeholder="Enter rank"
-              className="mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none transition-all"
               required
             />
           </label>
         </div>
 
-        <p className="text-gray-700 font-medium">Year of Evaluation: {year}</p>
+        <div className="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+          <p className="text-gray-700 font-semibold text-sm">Year of Evaluation: <span className="text-[#8D92EB]">{year}</span></p>
+        </div>
 
-        <div className="p-4 space-y-4 bg-gray-50 rounded-lg shadow-inner">
-          <h2 className="text-lg font-semibold border-b pb-1 border-gray-300">
-            Evaluation <span className="text-green-600 font-bold">10%</span>
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold border-b border-gray-100 pb-2">
+            Task Evaluation <span className="text-[#8D92EB]">(10%)</span>
           </h2>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 text-sm text-center">
-              <thead className="bg-gray-200">
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="min-w-full text-sm text-center bg-white">
+              <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="border px-2 py-1 w-16">No.</th>
-                  <th className="border px-2 py-1">Tasks</th>
-                  <th className="border px-2 py-1">Out of (100%)</th>
-                  <th className="border px-2 py-1">Action</th>
+                  <th className="px-4 py-3 font-semibold text-gray-600 w-16">No.</th>
+                  <th className="px-4 py-3 font-semibold text-gray-600 text-left">Tasks</th>
+                  <th className="px-4 py-3 font-semibold text-gray-600">Out of (100%)</th>
+                  <th className="px-4 py-3 font-semibold text-gray-600">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-100">
                 {tasks.map((task, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="border px-2 py-1 w-16">
+                  <tr key={index} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 w-16">
                       <input
                         type="number"
                         value={task.no}
                         onChange={(e) =>
                           handleTaskChange(index, 'no', e.target.value)
                         }
-                        className="w-full p-1 border rounded focus:ring-1 focus:ring-blue-300"
+                        className="w-full p-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none"
                         required
                       />
                     </td>
-                    <td className="border px-2 py-1 text-left">
+                    <td className="px-4 py-3 text-left">
                       <input
                         type="text"
                         value={task.task}
                         onChange={(e) =>
                           handleTaskChange(index, 'task', e.target.value)
                         }
-                        className="w-full p-1 border rounded focus:ring-1 focus:ring-blue-300"
+                        className="w-full p-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none"
                         required
                       />
                     </td>
-                    <td className="border px-2 py-1">
+                    <td className="px-4 py-3">
                       <input
                         type="number"
                         value={task.score}
                         onChange={(e) =>
                           handleTaskChange(index, 'score', e.target.value)
                         }
-                        className="w-full p-1 border rounded focus:ring-1 focus:ring-blue-300"
+                        className="w-full p-2 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#8D92EB]/50 focus:border-[#8D92EB] outline-none"
                         required
                       />
                     </td>
-                    <td className="border px-2 py-1">
+                    <td className="px-4 py-3">
                       {tasks.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeTask(index)}
-                          className="text-red-500 hover:text-red-700 font-medium"
+                          className="text-red-500 hover:text-red-700 font-semibold px-3 py-1 rounded-md hover:bg-red-50 transition-colors"
                         >
                           Remove
                         </button>
@@ -206,23 +209,25 @@ export default function PeerEvaluationForm() {
           <button
             type="button"
             onClick={addTask}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition"
+            className="text-sm bg-gray-100 text-gray-700 font-semibold px-5 py-2.5 rounded-lg hover:bg-gray-200 transition-colors"
           >
             + Add Task
           </button>
         </div>
 
         {message && (
-          <div className="text-center text-green-600 font-medium">{message}</div>
+          <div className={`p-4 rounded-xl text-center font-medium text-sm ${message.includes('Error') || message.includes('Failed') ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+            {message}
+          </div>
         )}
 
-        <div className="text-center">
+        <div className="pt-4 border-t border-gray-100 text-right">
           <button
             type="submit"
             disabled={loading}
-            className="bg-green-600 text-white px-8 py-2 rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50"
+            className="bg-[#8D92EB] text-white font-semibold px-10 py-3 rounded-xl shadow-sm hover:bg-[#7a7fd8] transition-colors disabled:opacity-50"
           >
-            {loading ? 'Sending...' : 'Send'}
+            {loading ? 'Submitting...' : 'Submit Evaluation'}
           </button>
         </div>
       </form>
